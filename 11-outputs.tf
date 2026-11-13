@@ -48,7 +48,7 @@ output "argocd_admin_username" {
 }
 
 output "argocd_initial_admin_password" {
-  value     = data.kubernetes_secret_v1.argocd_initial_admin.data["password"]
+  value     = try(data.kubernetes_secret_v1.argocd_initial_admin.data["password"], null)
   sensitive = true
 }
 
