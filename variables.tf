@@ -2,20 +2,20 @@
 variable "aws_region" {
   description = "AWS region to deploy into"
   type        = string
-  default     = "us-west-1"
+  default     = "us-east-1"
 }
 
 variable "cluster_name" {
   description = "Name of the EKS cluster; also used as a prefix for related resources"
   type        = string
-  default     = "smartcloud-eks"
+  default     = "roseren-eks"
 }
 
 # ---- Networking ----
 variable "vpc_name" {
   description = "Name tag of the VPC"
   type        = string
-  default     = "smartcloud-vpc"
+  default     = "roseren-vpc"
 }
 
 variable "vpc_cidr" {
@@ -66,16 +66,16 @@ variable "cluster_endpoint_public_access_cidrs" {
 }
 
 variable "cluster_admin_arns" {
-  description = "Extra IAM users/roles that get cluster-admin. The identity that runs terraform apply (the GitHub OIDC role) is admin automatically, so do NOT list it here."
+  description = "Extra IAM users/roles that get cluster_admin. The identity that runs terraform apply (the GitHub OIDC role) is admin automatically, so do NOT list it here."
   type        = list(string)
-  default     = ["arn:aws:iam::060647991200:user/terraform"]
+  default     = []
 }
 
 # ---- Worker nodes ----
 variable "node_instance_types" {
   description = "EC2 instance types for the managed node group"
   type        = list(string)
-  default     = ["t2.medium"]
+  default     = ["m7i-flex.large"]
 }
 
 variable "node_capacity_type" {
@@ -93,7 +93,7 @@ variable "node_disk_size" {
 variable "node_desired_size" {
   description = "Desired number of worker nodes"
   type        = number
-  default     = 5 # 4 x t2.medium hit the 17-pods-per-node limit
+  default     = 5 # 4 x m7i-flex.large hit the 17-pods-per-node limit
 }
 
 variable "node_min_size" {
@@ -111,7 +111,7 @@ variable "node_max_size" {
 variable "key_pair_name" {
   description = "Name of the EC2 key pair (private key is written to <name>.pem)"
   type        = string
-  default     = "smartcloud-eks-key"
+  default     = "roseren-eks-key"
 }
 
 # ---- Helm chart versions ----
@@ -161,14 +161,14 @@ variable "letsencrypt_server" {
 variable "letsencrypt_email" {
   description = "Optional contact email for the Let's Encrypt account"
   type        = string
-  default     = "chukwunonsosmartagbawo@gmail.com"
+  default     = "benita.uj@gmail.com"
 }
 
 # ---- Argo CD ----
 variable "argocd_hostname" {
   description = "Public hostname for the Argo CD UI (must match manifests/argocd-ingress.yaml)"
   type        = string
-  default     = "argocd.digitalwitch.online"
+  default     = "argocd.roserencollections.xyz"
 }
 
 # ---- EFS ----
@@ -182,7 +182,7 @@ variable "efs_transition_to_ia" {
 variable "kubeconfig_bucket" {
   description = "S3 bucket where the admin kubeconfig is uploaded"
   type        = string
-  default     = "terrformstate-060647991200"
+  default     = "roseren-terraform-state-205501819379-us-east-1-an"
 }
 
 variable "kubeconfig_s3_key" {
